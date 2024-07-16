@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="Dashboard.css" />
+    <script src="Dashboard.js"></script>
+  </head>
+  <body>
+    <div class="main-container">
+      <header>
+        <h1>Employee Directory</h1>
+        <div class="header-buttons">
+          <button id="fetchDataButton">Fetch Data</button>
+          <button id="addEmployeeButton">Add Employee</button>
+        </div>
+      </header>
+      <div class="employee-list" id="employeeContainer" class="hidden"></div>
+    </div>
+    <div id="modal" class="modal hidden">
+      <div class="modal-content">
+        <form id="employeeForm" onsubmit="return handleFormSubmit(event)">
+          <div class="form-content">
+            <label for="empName">Name</label>
+            <input id="empName" type="text" placeholder="Enter name" required />
+          </div>
+          <div class="form-content">
+            <label for="empDesignation">Designation</label>
+            <input
+              id="empDesignation"
+              type="text"
+              placeholder="Enter designation"
+              required
+            />
+          </div>
+          <div class="form-content">
+            <label for="empDob">Date of Birth</label>
+            <input id="empDob" type="date" required />
+          </div>
+          <div class="form-buttons">
+            <button type="submit">Save</button>
+            <button type="button" id="modalCloseButton">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <template id="employeeCardTemplate">
+      <div class="employee-card">
+        <div class="employee-card-content">
+          <label>Name:</label>
+          <input class="emp-name" type="text" disabled />
+        </div>
+        <div class="employee-card-content">
+          <label>Designation:</label>
+          <input class="emp-designation" type="text" disabled />
+        </div>
+        <div class="employee-card-content">
+          <label>Date of Birth:</label>
+          <input class="emp-dob" type="text" disabled />
+        </div>
+        <div class="card-actions">
+          <button class="edit-button">Edit</button>
+          <button class="delete-button">Delete</button>
+        </div>
+      </div>
+    </template>
+  </body>
+</html>
