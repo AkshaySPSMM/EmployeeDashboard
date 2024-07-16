@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Employee Management</title>
     <link rel="stylesheet" href="Dashboard.css" />
-    <script src="Dashboard.js"></script>
+    <script src="Dashboard.js" defer></script>
   </head>
   <body>
     <div class="main-container">
@@ -16,11 +16,13 @@
           <button id="addEmployeeButton">Add Employee</button>
         </div>
       </header>
-      <div class="employee-list" id="employeeContainer" class="hidden"></div>
+      <div class="employee-list hidden" id="employeeContainer">
+        <!-- Cards will be inserted here -->
+      </div>
     </div>
     <div id="modal" class="modal hidden">
       <div class="modal-content">
-        <form id="employeeForm" onsubmit="return handleFormSubmit(event)">
+        <form id="employeeForm">
           <div class="form-content">
             <label for="empName">Name</label>
             <input id="empName" type="text" placeholder="Enter name" required />
@@ -45,26 +47,5 @@
         </form>
       </div>
     </div>
-
-    <template id="employeeCardTemplate">
-      <div class="employee-card">
-        <div class="employee-card-content">
-          <label>Name:</label>
-          <input class="emp-name" type="text" disabled />
-        </div>
-        <div class="employee-card-content">
-          <label>Designation:</label>
-          <input class="emp-designation" type="text" disabled />
-        </div>
-        <div class="employee-card-content">
-          <label>Date of Birth:</label>
-          <input class="emp-dob" type="text" disabled />
-        </div>
-        <div class="card-actions">
-          <button class="edit-button">Edit</button>
-          <button class="delete-button">Delete</button>
-        </div>
-      </div>
-    </template>
   </body>
 </html>
