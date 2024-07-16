@@ -27,9 +27,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (this.hasAttribute('data-employee-id')) {
       const employeeId = this.getAttribute('data-employee-id');
-      updateEmployee(formData, employeeId);
+      updateEmployee(formData, employeeId)
+        .then(() => {
+          console.log('Employee updated successfully');
+        })
+        .catch(error => {
+          console.error('Error updating employee:', error);
+        });
     } else {
-      addEmployee(formData);
+      addEmployee(formData)
+        .then(() => {
+          console.log('Employee added successfully');
+        })
+        .catch(error => {
+          console.error('Error adding employee:', error);
+        });
     }
   });
 
@@ -37,8 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
   function toggleFetchData() {
     const employeeContainer = document.getElementById('employeeContainer');
     if (employeeContainer.classList.contains('hidden')) {
-      fetchEmployees();
-      employeeContainer.classList.remove('hidden');
+      fetchEmployees()
+        .then(() => {
+          employeeContainer.classList.remove('hidden');
+        })
+        .catch(error => {
+          console.error('Error fetching employees:', error);
+        });
     } else {
       employeeContainer.classList.add('hidden');
       employeeContainer.innerHTML = '';
@@ -47,14 +64,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Fetch employees
   function fetchEmployees() {
-    console.log('Fetching employees');
-    fetch('https://6580190d6ae0629a3f54561f.mockapi.io/api/v1/employee')
-      .then(response => response.json())
-      .then(employees => {
-        console.log('Employees fetched:', employees);
-        displayEmployees(employees);
-      })
-      .catch(error => console.error('Error on fetching employees:', error));
+    return new Promise((resolve, reject) => {
+      console.log('Fetching employees');
+      fetch('https://6580190d6ae0629a3f54561f.mockapi.io/api/v1/employee')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error on fetching employees');
+          }
+          return response.json();
+        })
+        .then(employees => {
+          console.log('Employees fetched:', employees);
+          displayEmployees(employees);
+          resolve(employees);
+        })
+        .catch(error => {
+          console.error('Error on fetching employees:', error);
+          reject(error);
+        });
+    });
   }
 
   // Display employees
@@ -132,7 +160,13 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteButton.textContent = 'Delete';
     deleteButton.onclick = () => {
       if (confirm('Do you want to delete this employee?')) {
-        deleteEmployee(employee.id);
+        deleteEmployee(employee.id)
+          .then(() => {
+            console.log('Employee deleted successfully');
+          })
+          .catch(error => {
+            console.error('Error deleting employee:', error);
+          });
       }
     };
 
@@ -169,14 +203,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Validate name and designation
   function validateField(value) {
-    const re = /^[a-zA-Z\s]+$/;
+    const re = /^(?!\s*$)[a-zA-Z\s]+$/;
     return re.test(value);
   }
 
   // Validate name
   function validateName(name) {
     if (!validateField(name)) {
-      alert('Name must contain only alphabets.');
+      alert('Invalid Name Entry.');
       return false;
     }
     return true;
@@ -185,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Validate designation
   function validateDesignation(designation) {
     if (!validateField(designation)) {
-      alert('Designation must contain only alphabets.');
+      alert('Invalid Designation Entry.');
       return false;
     }
     return true;
@@ -193,42 +227,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Add employee
   function addEmployee(formData) {
-    fetch('https://6580190d6ae0629a3f54561f.mockapi.io/api/v1/employee', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-      .then(() => {
-        fetchEmployees();
-        closeModal();
+    return new Promise((resolve, reject) => {
+      fetch('https://6580190d6ae0629a3f54561f.mockapi.io/api/v1/employee', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
       })
-      .catch(error => console.error('Error on adding employee:', error));
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error on adding employee');
+          }
+          return response.json();
+        })
+        .then(data => {
+          fetchEmployees();
+          closeModal();
+          resolve(data);
+        })
+        .catch(error => {
+          console.error('Error on adding employee:', error);
+          reject(error);
+        });
+    });
   }
 
   // Update Employee
   function updateEmployee(formData, id) {
-    fetch(`https://6580190d6ae0629a3f54561f.mockapi.io/api/v1/employee/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-      .then(() => {
-        fetchEmployees();
-        closeModal();
+    return new Promise((resolve, reject) => {
+      fetch(`https://6580190d6ae0629a3f54561f.mockapi.io/api/v1/employee/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
       })
-      .catch(error => console.error('Error on updating employee:', error));
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error on updating employee');
+          }
+          return response.json();
+        })
+        .then(data => {
+          fetchEmployees();
+          closeModal();
+          resolve(data);
+        })
+        .catch(error => {
+          console.error('Error on updating employee:', error);
+          reject(error);
+        });
+    });
   }
 
   // Delete Employee
   function deleteEmployee(id) {
-    fetch(`https://6580190d6ae0629a3f54561f.mockapi.io/api/v1/employee/${id}`, {
-      method: 'DELETE'
-    })
-      .then(() => fetchEmployees())
-      .catch(error => console.error('Error on deleting employee:', error));
+    return new Promise((resolve, reject) => {
+      fetch(`https://6580190d6ae0629a3f54561f.mockapi.io/api/v1/employee/${id}`, {
+        method: 'DELETE'
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error on deleting employee');
+          }
+          resolve();
+          fetchEmployees();
+        })
+        .catch(error => {
+          console.error('Error on deleting employee:', error);
+          reject(error);
+        });
+    });
   }
 });
