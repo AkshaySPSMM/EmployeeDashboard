@@ -75,69 +75,76 @@ button {
   flex-direction: column;
   transition: 0.5s ease-in-out;
 }
+
 .employee-card:hover {
   transform: scale(1.1);
   box-shadow: 0 0 5px 3px;
 }
-.employee-card-content {
-  display: flex;
-  justify-content: space-between;
-}
+
 #employeeForm {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
+
 .form-content {
   display: flex;
   justify-content: space-between;
 }
-input {
-  width: 50%;
+
+.form-content input,
+select {
+  width: 60%;
+}
+
+input,
+select {
   border: 1px solid rgb(203, 193, 193);
   border-radius: 3px;
   outline: none;
 }
+
 .form-buttons {
   display: flex;
   justify-content: space-between;
 }
+
 .edit-button {
   background-color: rgb(19, 108, 240);
 }
+
 .edit-button:hover {
   background-color: #04366a;
 }
+
 .delete-button {
   background-color: red;
 }
+
 .delete-button:hover {
   background-color: rgb(174, 13, 13);
 }
-#fetchDataButton {
-  background-color: rgb(248, 206, 41);
-  color: black;
-  font-weight: 600;
-}
-#fetchDataButton:hover {
-  background-color: rgb(146, 122, 24);
-}
+
 #addEmployeeButton {
   background-color: chartreuse;
   color: black;
   font-weight: 600;
 }
+
 #addEmployeeButton:hover {
   background-color: rgb(91, 162, 20);
 }
+
 .employee-detail {
   display: flex;
   justify-content: space-between;
 }
+
 .employee-card label {
   font-weight: bold;
   margin-bottom: 5px;
 }
+
 .employee-card input {
   border: none;
   background: none;

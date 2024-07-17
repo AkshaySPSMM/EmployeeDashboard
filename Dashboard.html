@@ -12,11 +12,10 @@
       <header>
         <h1>Employee Dashboard</h1>
         <div class="header-buttons">
-          <button id="fetchDataButton">Fetch Data</button>
           <button id="addEmployeeButton">Add Employee</button>
         </div>
       </header>
-      <div class="employee-list hidden" id="employeeContainer">
+      <div class="employee-list" id="employeeContainer">
         <!-- Cards will be inserted here -->
       </div>
     </div>
@@ -29,12 +28,13 @@
           </div>
           <div class="form-content">
             <label for="empDesignation">Designation</label>
-            <input
-              id="empDesignation"
-              type="text"
-              placeholder="Enter designation"
-              required
-            />
+            <select id="empDesignation" required>
+              <option value="Software Engineer">Software Engineer</option>
+              <option value="Software Developer">Software Developer</option>
+              <option value="Software Tester">Software Tester</option>
+              <option value="Software Architect">Software Architect</option>
+              <option value="Software Analyst">Software Analyst</option>
+            </select>
           </div>
           <div class="form-content">
             <label for="empDob">Date of Birth</label>
@@ -47,5 +47,12 @@
         </form>
       </div>
     </div>
+    <div id="deleteModal" class="modal hidden">
+      <div class="modal-content">
+        <p>Do you want to delete this employee?</p>
+        <button id="deleteConfirmButton">Delete</button>
+        <button id="deleteCancelButton">Cancel</button>
+      </div>
+    </div>    
   </body>
 </html>
