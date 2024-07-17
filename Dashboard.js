@@ -47,7 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Fetch employees initially when the page loads
   fetchEmployees()
     .then(() => {
       document.getElementById("employeeContainer").classList.remove("hidden");
@@ -56,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error fetching employees initially:", error);
     });
 
+  //Fetch Employees
   function fetchEmployees() {
     return new Promise((resolve, reject) => {
       console.log("Fetching employees");
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
   }
-
+  //Display Employees
   function displayEmployees(employees) {
     const container = document.getElementById("employeeContainer");
     container.innerHTML = "";
@@ -162,16 +162,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("employeeForm");
     const designationSelect = form.elements.empDesignation;
 
+    const designationOptions = [
+      "Software Engineer",
+      "Software Developer",
+      "Software Tester",
+      "Software Architect",
+      "Software Analyst",
+    ];
     if (employee) {
       form.elements.empName.value = employee.name;
-
-      const designationOptions = [
-        "Software Engineer",
-        "Software Developer",
-        "Software Tester",
-        "Software Architect",
-        "Software Analyst",
-      ];
       designationSelect.innerHTML = "";
       designationOptions.forEach((option) => {
         const optionElement = document.createElement("option");
@@ -187,14 +186,6 @@ document.addEventListener("DOMContentLoaded", () => {
       form.setAttribute("data-employee-id", employee.id);
     } else {
       form.reset();
-
-      const designationOptions = [
-        "Software Engineer",
-        "Software Developer",
-        "Software Tester",
-        "Software Architect",
-        "Software Analyst",
-      ];
       designationSelect.innerHTML = "";
       designationOptions.forEach((option) => {
         const optionElement = document.createElement("option");
@@ -212,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function closeModal() {
     document.getElementById("modal").classList.add("hidden");
   }
-
+  //Validation
   function validateField(value) {
     const re = /^(?!\s*$)[a-zA-Z\s]+$/;
     return re.test(value);
@@ -233,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     return true;
   }
-
+  //Add Employees
   function addEmployee(formData) {
     return new Promise((resolve, reject) => {
       fetch("https://6580190d6ae0629a3f54561f.mockapi.io/api/v1/employee", {
@@ -260,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
   }
-
+  //Update Employees
   function updateEmployee(formData, id) {
     return new Promise((resolve, reject) => {
       fetch(
@@ -307,7 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
   }
-
+  //Delete Employees
   function deleteEmployee(id) {
     return new Promise((resolve, reject) => {
       fetch(
